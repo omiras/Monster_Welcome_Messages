@@ -1,1 +1,3 @@
-A very simple and basic program that retrieves text from an input box.
+# Welcome message with Vue3
+
+Simple exercise with Vue3 showing how v-model works.
