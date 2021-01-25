@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JavaScript Messages</title>
 </head>
+
 <body>
-    <div id="output"></div>
-    <label>Name:</label><input type="text" placeholder="Type your name">
-    <button>Message</button>
-</body>
-<script>
-    const btn = document.querySelector('button');
-    btn.addEventListener('click', function(){
-        const output = document.querySelector('#output');
-        const name = document.querySelector('input').value;
-        output.innerHTML = `<h1>Hello and welcome, ${name}</h1>`;
+    <div id="app">
+        <!--6. mostrar o no mostrar el mensaje, depende del valor de la variable 'confirmedMessage'. En caso que sea string vacío, este se evalua como false; y por ende, v-show=false y no mostramos el div. Cuando confimedMessage tiene un valor, v-show=true -->
+        <div v-show="confirmedMessage" id="output"> Welcome back, {{ confirmedMessage }}</div>
+        <!--3. Añadimos la directiva v-model al tag input. Esto lo que hace es que cuando cambiamos el valor del input; dicho cambio se ve reflejado en la variable 'message'; y viceversa -->
+        <label>Name:</label><input type="text" placeholder="Type your name" v-model="message">
+        <!--4. Añadimos la directiva @click. Asocia el evento 'click' de JAvaScript a este tag button. Cuando hagamos clic en el, invocaremos la función -->
+        <button @click="showMessage">Message</button>
+    </div>
+
+    <!-- Añadimos el script de Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+    // 1. Instanciamos Vue y montamos la aplicación sonre un tag HTML; que nos ha hacer las funciones de contenedor de la aplicación
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 2. Necesitamos guardar en una variable el valor que el usuario introduce en el input; para mostar dicho valor en un elemento del DOM diferente. Tenemos que inicializar la variable con un valor que represente fielmente nuestro "estado inicial" de la aplicación. En este caso, como el usuario todavía no ha añadido ningún al input; tiene sentido iniciar la variable como string vacío
+                message: '',
+
+                // 5. Como necesitamos una variable para diferenciar el estado de "estoy escribiendo" a "muestra lo que he escrito", vamos a crear otra variable que muestre el texto una vez lo hemos confirmado
+                confirmedMessage: '',
+            }
+        },
+        methods: {
+            showMessage() {
+                // Copiamos el valor del mensaje 'temporal' al mensaje 'definitivo'
+                this.confirmedMessage = this.message
+            } 
+        }
     })
-</script>
+
+    app.mount('#app')
+
+    </script>
+</body>
+
 </html>
